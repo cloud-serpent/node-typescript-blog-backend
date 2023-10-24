@@ -55,4 +55,4 @@ export const logInHandler = async (
   res.status(httpStatus.OK).json({ user: user, token: token });
 };
 
-export const login = errorHandlerWrapper(logInHandler);
+export const logIn = errorHandlerWrapper(logInHandler);
