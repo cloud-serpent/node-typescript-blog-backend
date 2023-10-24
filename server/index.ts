@@ -1,6 +1,9 @@
 import express from "express";
-import { backendSetup } from "setups";
+
+import { backendSetup, databaseSetup } from "./setups";
 
 const app = express();
 
-backendSetup(app);
+databaseSetup(() => {
+  backendSetup(app);
+});

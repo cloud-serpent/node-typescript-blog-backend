@@ -1,1 +1,1 @@
-export * as SERVER from "./server";
+export * as ACCOUNTS from './account';

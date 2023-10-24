@@ -28,6 +28,7 @@
     "express-validator": "^6.15.0",
     "http-status": "^1.6.2",
     "moment": "^2.29.4",
+    "mysql": "^2.18.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -38,6 +39,8 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.5.0",
+    "typeorm": "^0.3.17",
+    "typeorm-extension": "^3.1.0",
     "typescript": "^5.0.3"
   }
 }
