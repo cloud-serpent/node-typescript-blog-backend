@@ -21,13 +21,13 @@ export const registerValidator = () => {
             .withMessage({first_name: 'First name is required'}),
         body('last_name')
             .notEmpty()
-            .withMessage({first_name: 'Last name is required'}),
+            .withMessage({last_name: 'Last name is required'}),
         body('password1')
             .notEmpty()
-            .withMessage({password: 'Password is required'}),
+            .withMessage({password1: 'Password is required'}),
         body('password2')
             .notEmpty()
-            .withMessage({password: 'Confirm password is required'}),
+            .withMessage({password2: 'Confirm password is required'}),
     ];
 };
 
