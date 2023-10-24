@@ -1,4 +1,4 @@
 import ERRORS from "./errors";
 import * as MESSAGES from "./message";
-export { MESSAGES, ERRORS };
-export * as REASON_CODE from "./reasonCode";
+import * as REASON_CODE from "./reasonCode";
+export { MESSAGES, ERRORS, REASON_CODE };

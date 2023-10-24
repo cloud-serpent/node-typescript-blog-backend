@@ -1,14 +1,12 @@
 import { Request, Response } from "express";
 import { body } from "express-validator";
 import httpStatus from "http-status";
-
-import { CustomError } from "errors";
-
 import { userService } from "services";
 import { Logger, errorHandlerWrapper } from "utils";
-import { REASON_CODE } from "consts";
+import { CustomError } from "errors";
 import { comparePassword } from "utils/password";
 import { jwtSign } from "utils/jwt";
+import { REASON_CODE } from "consts";
 
 export const logInValidator = () => {
   return [
@@ -55,4 +53,4 @@ export const logInHandler = async (
   res.status(httpStatus.OK).json({ user: user, token: token });
 };
 
-export const logIn = errorHandlerWrapper(logInHandler);
+export const login = errorHandlerWrapper(logInHandler);

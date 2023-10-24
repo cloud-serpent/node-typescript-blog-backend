@@ -5,9 +5,9 @@ const authRouter = express.Router();
 
 // User Log In
 authRouter.post(
-  "log-in",
+  "/login",
   authController.logInValidator(),
-  authController.logIn
+  authController.login
 );
 
 export default authRouter;
