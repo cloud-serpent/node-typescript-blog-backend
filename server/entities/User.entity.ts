@@ -1,17 +1,12 @@
 import { Column, Entity, Generated } from "typeorm";
 
 import { CoreEntity } from "./Core.entity";
+import { UserActivationStatus } from "types";
 
 @Entity({
   name: "user",
 })
 export class UserEntity extends CoreEntity {
-  @Column({ name: "first_name", nullable: true })
-  firstname?: string;
-
-  @Column({ name: "last_name", nullable: true })
-  lastname?: string;
-
   @Column({ name: "email", nullable: true })
   email?: string;
 
@@ -33,6 +28,6 @@ export class UserEntity extends CoreEntity {
   @Column({ name: "avatar", nullable: true })
   avatar?: string;
 
-  @Column({ name: "notification_setting", length: 3 })
-  notificationSetting: string;
+  @Column({ name: "activated", default: 0 })
+  activated: UserActivationStatus;
 }
