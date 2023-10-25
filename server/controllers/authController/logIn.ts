@@ -47,8 +47,8 @@ export const logInHandler = async (
   }
 
   const user = email
-    ? await userService.getUserByEmail({ email })
-    : await userService.getUserByEmail({ phone_number });
+    ? await userService.getUser({ email })
+    : await userService.getUser({ phone_number });
   Logger.log(user);
   if (!user) {
     throw new ArgumentValidationError("Invalid Arguments", [

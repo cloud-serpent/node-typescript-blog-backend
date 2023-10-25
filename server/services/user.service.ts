@@ -1,7 +1,7 @@
 import { UserEntity } from "entities";
 import { Logger, getUserRepository } from "utils";
 
-export const getUserByEmail = async (
+export const getUser = async (
   data: Partial<Pick<UserEntity, "email" | "phone_number">>
 ): Promise<UserEntity | null> => {
   const userRepository = await getUserRepository();
