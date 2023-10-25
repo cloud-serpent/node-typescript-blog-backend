@@ -24,12 +24,9 @@ export const registerValidator = () => {
         body('country_code')
             .notEmpty()
             .withMessage({country_code: 'Country code is required'}),
-        body('password1')
+        body('password')
             .notEmpty()
             .withMessage({password1: 'Password is required'}),
-        body('password2')
-            .notEmpty()
-            .withMessage({password2: 'Confirm password is required'}),
     ];
 };
 
@@ -40,8 +37,7 @@ type ReqBody = {
     display_name?: string;
     phone_number?: string;
     country_code?: string;
-    password1: string;
-    password2: string;
+    password: string;
 }
 type IFile = {
     url: string,
@@ -53,14 +49,7 @@ export const registerHandler =async (
     req: Request<Params, ResBody, ReqBody, IFile, ReqQuery>,
     res: Response
 ) => {
-    const {email,display_name, phone_number, country_code, password1, password2} = req.body;
-    if(password1 != password2){
-        throw new ArgumentValidationError(
-            "Confirm password is incorrect!",
-            [{ password2: "Confirm password is incorrect" }],
-            MESSAGES.PASSWORD_NOT_CORRECT
-        )
-    }
+    const {email,display_name, phone_number, country_code, password} = req.body;
     const user = await userService.getUserByEmail(email);
     Logger.log(user);
     if (user) {
@@ -80,7 +69,7 @@ export const registerHandler =async (
           MESSAGES.DUPLICATED_ACCOUNT
         );
     }
-    const cryptPassword = await encryptPassword(password1);
+    const cryptPassword = await encryptPassword(password);
     const result = await userService.createUser(display_name, country_code, phone_number, email, cryptPassword);
     res.status(httpStatus.OK).json(result);
 }
