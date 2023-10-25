@@ -3,12 +3,11 @@ import {body} from 'express-validator';
 import httpStatus from 'http-status';
 import { MESSAGES } from 'consts';
 import { userService } from 'services';
-import { ArgumentValidationError, CustomError } from 'errors';
+import { ArgumentValidationError } from 'errors';
 import { errorHandlerWrapper } from 'utils/errorHandler.wrapper';
 import { Logger, encryptPassword } from 'utils';
 
 export const registerValidator = () => {
-    console.log("registered");
     return[
         body('email')
             .notEmpty()
@@ -16,12 +15,15 @@ export const registerValidator = () => {
             .bail()
             .isEmail()
             .withMessage({email: 'Email is incorrect'}),
-        body('first_name')
+        body('display_name')
             .notEmpty()
-            .withMessage({first_name: 'First name is required'}),
-        body('last_name')
+            .withMessage({display_name: 'Display name is required'}),
+        body('phone_number')
             .notEmpty()
-            .withMessage({last_name: 'Last name is required'}),
+            .withMessage({phone_number: 'Phone number is required'}),
+        body('country_code')
+            .notEmpty()
+            .withMessage({country_code: 'Country code is required'}),
         body('password1')
             .notEmpty()
             .withMessage({password1: 'Password is required'}),
@@ -35,18 +37,23 @@ type Params = unknown;
 type ResBody = unknown;
 type ReqBody = {
     email?: string;
-    first_name?: string;
-    last_name?: string;
+    display_name?: string;
+    phone_number?: string;
+    country_code?: string;
     password1: string;
     password2: string;
 }
+type IFile = {
+    url: string,
+    name: string,
+  }
 type ReqQuery = unknown;
 
 export const registerHandler =async (
-    req: Request<Params, ResBody, ReqBody, ReqQuery>,
+    req: Request<Params, ResBody, ReqBody, IFile, ReqQuery>,
     res: Response
 ) => {
-    const {email, first_name, last_name, password1, password2} = req.body;
+    const {email,display_name, phone_number, country_code, password1, password2} = req.body;
     if(password1 != password2){
         throw new ArgumentValidationError(
             "Confirm password is incorrect!",
@@ -63,8 +70,18 @@ export const registerHandler =async (
           MESSAGES.DUPLICATED_ACCOUNT
         );
     }
+
+    const phone = await userService.getUserByEmail(phone_number);
+    Logger.log(phone);
+    if (phone_number) {
+        throw new ArgumentValidationError(
+          `${phone_number} is already registered. Please sign in or change another phone number`,
+          [{ phone_number: `${phone_number} is already registered. Please sign in or change another phone number` }],
+          MESSAGES.DUPLICATED_ACCOUNT
+        );
+    }
     const cryptPassword = await encryptPassword(password1);
-    const result = await userService.createUser(email, first_name, last_name, cryptPassword);
+    const result = await userService.createUser(display_name, country_code, phone_number, email, cryptPassword);
     res.status(httpStatus.OK).json(result);
 }
 

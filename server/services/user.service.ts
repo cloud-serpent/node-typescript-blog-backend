@@ -7,9 +7,12 @@ export const getUserByEmail = async (email: string):Promise<UserEntity | null> =
     .createQueryBuilder('user')
     .select([
         'user.email',
-        'user.first_name',
-        'user.last_name',
+        'user.display_name',
+        'user.country_code',
+        'user.phone_number',
         'user.role',
+        'user.activated',
+        'user.avartar',
     ])
     .where('user.email = :email', {email})
     .getOne();
@@ -17,16 +20,37 @@ export const getUserByEmail = async (email: string):Promise<UserEntity | null> =
     return user;
 }
 
+export const getUserByEPhone = async (phone: string):Promise<UserEntity | null> => {
+    const userRepository = await getUserRepository();
+    const user: UserEntity | null = await userRepository
+    .createQueryBuilder('user')
+    .select([
+        'user.email',
+        'user.display_name',
+        'user.country_code',
+        'user.phone_number',
+        'user.role',
+        'user.activated',
+        'user.avartar',
+    ])
+    .where('user.phone_number = :phone_number', {phone})
+    .getOne();
+    Logger.log("User", user);
+    return user;
+}
+
 export const createUser = async (
-    first_name: string,
-    last_name: string,
+    display_name: string,
+    country_code: string,
+    phone_number: string,
     email: string,
     password: string
 ): Promise<UserEntity | null> => {
     const userRepository = await getUserRepository();
     const user = new UserEntity();
-    user.first_name = first_name;
-    user.last_name = last_name;
+    user.display_name = display_name;
+    user.country_code = country_code;
+    user.phone_number = phone_number;
     user.email = email;
     user.password = password;
     await userRepository.save(user);

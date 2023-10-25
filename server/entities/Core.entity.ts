@@ -3,14 +3,11 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  
 } from 'typeorm';
 
 @Entity()
 export class CoreEntity {
-  
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
-  id: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
