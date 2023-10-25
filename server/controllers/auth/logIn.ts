@@ -36,24 +36,24 @@ export const logInHandler = async (
 
   if (!email && !phone) {
     throw new ArgumentValidationError("Invalid Arguments", [
-      "Email or phone number is required",
+      { id: "Email or phone number is required" },
     ]);
   }
 
   if (email && phone) {
     throw new ArgumentValidationError("Invalid Arguments", [
-      "Only one of email or phone number is required",
+      { id: "Only one of email or phone number is required" },
     ]);
   }
 
-  const user = await userService.getUserByEmail(email);
+  const user = email
+    ? await userService.getUserByEmail(email)
+    : await userService.getUserByPhone(phone);
   Logger.log(user);
   if (!user) {
-    throw new CustomError(
-      "User does not exist!",
-      httpStatus.BAD_REQUEST,
-      REASON_CODE.AUTH.USER_IS_NOT_EXIST
-    );
+    throw new ArgumentValidationError("Invalid Arguments", [
+      { id: "Email or phone number is incorrect!" },
+    ]);
   }
 
   const pwd = await userService.getPassword(email);
