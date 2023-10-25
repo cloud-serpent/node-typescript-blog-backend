@@ -15,18 +15,18 @@ export const registerValidator = () => {
       .bail()
       .isEmail()
       .withMessage({ email: "Email is incorrect" }),
-    body("display_name")
+    body("displayName")
       .notEmpty()
-      .withMessage({ display_name: "Display name is required" }),
-    body("phone_number")
+      .withMessage({ displayName: "Display name is required" }),
+    body("phoneNumber")
       .notEmpty()
-      .withMessage({ phone_number: "Phone number is required" }),
-    body("country_code")
+      .withMessage({ phoneNumber: "Phone number is required" }),
+    body("countryCode")
       .notEmpty()
-      .withMessage({ country_code: "Country code is required" }),
+      .withMessage({ countryCode: "Country code is required" }),
     body("password")
       .notEmpty()
-      .withMessage({ password1: "Password is required" }),
+      .withMessage({ password: "Password is required" }),
   ];
 };
 
@@ -35,7 +35,7 @@ type ResBody = unknown;
 type ReqBody = {
   email?: string;
   display_name?: string;
-  phone_number?: string;
+  phoneNumber?: string;
   country_code?: string;
   password: string;
 };
@@ -49,8 +49,7 @@ export const registerHandler = async (
   req: Request<Params, ResBody, ReqBody, IFile, ReqQuery>,
   res: Response
 ) => {
-  const { email, display_name, phone_number, country_code, password } =
-    req.body;
+  const { email, display_name, phoneNumber, country_code, password } = req.body;
   const user = await userService.getUser({ email });
   Logger.log(user);
   if (user) {
@@ -65,14 +64,14 @@ export const registerHandler = async (
     );
   }
 
-  const phone = await userService.getUser({ phone_number });
+  const phone = await userService.getUser({ phoneNumber });
   Logger.log(phone);
-  if (phone_number) {
+  if (phoneNumber) {
     throw new ArgumentValidationError(
-      `${phone_number} is already registered. Please sign in or change another phone number`,
+      `${phoneNumber} is already registered. Please sign in or change another phone number`,
       [
         {
-          phone_number: `${phone_number} is already registered. Please sign in or change another phone number`,
+          phoneNumber: `${phoneNumber} is already registered. Please sign in or change another phone number`,
         },
       ],
       MESSAGES.DUPLICATED_ACCOUNT
@@ -82,7 +81,7 @@ export const registerHandler = async (
   const result = await userService.createUser(
     display_name,
     country_code,
-    phone_number,
+    phoneNumber,
     email,
     cryptPassword
   );

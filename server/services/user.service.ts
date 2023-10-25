@@ -2,7 +2,7 @@ import { UserEntity } from "entities";
 import { Logger, getUserRepository } from "utils";
 
 export const getUser = async (
-  data: Partial<Pick<UserEntity, "email" | "phone_number">>
+  data: Partial<Pick<UserEntity, "email" | "phoneNumber">>
 ): Promise<UserEntity | null> => {
   const userRepository = await getUserRepository();
   const user: UserEntity | null = await userRepository
@@ -31,9 +31,9 @@ export const createUser = async (
 ): Promise<UserEntity | null> => {
   const userRepository = await getUserRepository();
   const user = new UserEntity();
-  user.display_name = display_name;
-  user.country_code = country_code;
-  user.phone_number = phone_number;
+  user.displayName = display_name;
+  user.countryCode = country_code;
+  user.phoneNumber = phone_number;
   user.email = email;
   user.password = password;
   await userRepository.save(user);

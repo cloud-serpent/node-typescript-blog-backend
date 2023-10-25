@@ -1,9 +1,4 @@
-import { 
-  Column, 
-  Entity, 
-  Generated, 
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
 
 import { CoreEntity } from "./Core.entity";
 import { UserActivationStatus } from "types";
@@ -12,11 +7,11 @@ import { UserActivationStatus } from "types";
   name: "user",
 })
 export class UserEntity extends CoreEntity {
-  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
+  @PrimaryGeneratedColumn("increment", { type: "bigint" })
   id: number;
 
   @Column({ name: "display_name", nullable: true })
-  display_name?: string;
+  displayName?: string;
 
   @Column({ name: "password", select: false })
   password: string;
@@ -25,10 +20,10 @@ export class UserEntity extends CoreEntity {
   role: number;
 
   @Column({ name: "country_code", nullable: true })
-  country_code?: string;
+  countryCode?: string;
 
   @Column({ name: "phone_number", nullable: true })
-  phone_number?: string;
+  phoneNumber?: string;
 
   @Column({ name: "email", nullable: true })
   email?: string;
