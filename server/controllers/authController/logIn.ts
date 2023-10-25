@@ -11,7 +11,7 @@ import { REASON_CODE } from "consts";
 export const logInValidator = () => {
   return [
     body("email").optional().isEmail().withMessage("Email is not correct."),
-    body("phone")
+    body("phoneNumber")
       .optional()
       .isMobilePhone("any")
       .withMessage("Phone number is not correct"),
@@ -23,7 +23,7 @@ type Params = unknown;
 type ResBody = unknown;
 type ReqBody = {
   email?: string;
-  phone?: string;
+  phoneNumber?: string;
   password: string;
 };
 type ReqQuery = unknown;
@@ -32,28 +32,28 @@ export const logInHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const { email, phone, password } = req.body;
+  const { email, phoneNumber, password } = req.body;
 
-  if (!email && !phone) {
+  if (!email && !phoneNumber) {
     throw new ArgumentValidationError("Invalid Arguments", [
-      "Email or phone number is required",
+      { id: "Email or phone number is required" },
     ]);
   }
 
-  if (email && phone) {
+  if (email && phoneNumber) {
     throw new ArgumentValidationError("Invalid Arguments", [
-      "Only one of email or phone number is required",
+      { id: "Only one of email or phone number is required" },
     ]);
   }
 
-  const user = await userService.getUserByEmail(email);
+  const user = email
+    ? await userService.getUser({ email })
+    : await userService.getUser({ phoneNumber });
   Logger.log(user);
   if (!user) {
-    throw new CustomError(
-      "User does not exist!",
-      httpStatus.BAD_REQUEST,
-      REASON_CODE.AUTH.USER_IS_NOT_EXIST
-    );
+    throw new ArgumentValidationError("Invalid Arguments", [
+      { id: "Email or phone number is incorrect!" },
+    ]);
   }
 
   const pwd = await userService.getPassword(email);
