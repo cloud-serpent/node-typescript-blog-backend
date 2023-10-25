@@ -2,7 +2,7 @@ import { UserEntity } from "entities";
 import { Logger, getUserRepository } from "utils";
 
 export const getUserByEmail = async (
-  email: string
+  data: Partial<Pick<UserEntity, "email" | "phone_number">>
 ): Promise<UserEntity | null> => {
   const userRepository = await getUserRepository();
   const user: UserEntity | null = await userRepository
@@ -16,28 +16,7 @@ export const getUserByEmail = async (
       "user.activated",
       "user.avartar",
     ])
-    .where("user.email = :email", { email })
-    .getOne();
-  Logger.log("User", user);
-  return user;
-};
-
-export const getUserByPhone = async (
-  phone: string
-): Promise<UserEntity | null> => {
-  const userRepository = await getUserRepository();
-  const user: UserEntity | null = await userRepository
-    .createQueryBuilder("user")
-    .select([
-      "user.email",
-      "user.display_name",
-      "user.country_code",
-      "user.phone_number",
-      "user.role",
-      "user.activated",
-      "user.avartar",
-    ])
-    .where("user.phone_number = :phone_number", { phone })
+    .where(data)
     .getOne();
   Logger.log("User", user);
   return user;

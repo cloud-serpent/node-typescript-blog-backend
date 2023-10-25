@@ -11,7 +11,7 @@ import { REASON_CODE } from "consts";
 export const logInValidator = () => {
   return [
     body("email").optional().isEmail().withMessage("Email is not correct."),
-    body("phone")
+    body("phone_number")
       .optional()
       .isMobilePhone("any")
       .withMessage("Phone number is not correct"),
@@ -23,7 +23,7 @@ type Params = unknown;
 type ResBody = unknown;
 type ReqBody = {
   email?: string;
-  phone?: string;
+  phone_number?: string;
   password: string;
 };
 type ReqQuery = unknown;
@@ -32,23 +32,23 @@ export const logInHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const { email, phone, password } = req.body;
+  const { email, phone_number, password } = req.body;
 
-  if (!email && !phone) {
+  if (!email && !phone_number) {
     throw new ArgumentValidationError("Invalid Arguments", [
       { id: "Email or phone number is required" },
     ]);
   }
 
-  if (email && phone) {
+  if (email && phone_number) {
     throw new ArgumentValidationError("Invalid Arguments", [
       { id: "Only one of email or phone number is required" },
     ]);
   }
 
   const user = email
-    ? await userService.getUserByEmail(email)
-    : await userService.getUserByPhone(phone);
+    ? await userService.getUserByEmail({ email })
+    : await userService.getUserByEmail({ phone_number });
   Logger.log(user);
   if (!user) {
     throw new ArgumentValidationError("Invalid Arguments", [

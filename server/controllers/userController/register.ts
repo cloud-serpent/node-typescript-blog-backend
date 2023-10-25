@@ -51,7 +51,7 @@ export const registerHandler = async (
 ) => {
   const { email, display_name, phone_number, country_code, password } =
     req.body;
-  const user = await userService.getUserByEmail(email);
+  const user = await userService.getUserByEmail({ email });
   Logger.log(user);
   if (user) {
     throw new ArgumentValidationError(
@@ -65,7 +65,7 @@ export const registerHandler = async (
     );
   }
 
-  const phone = await userService.getUserByPhone(phone_number);
+  const phone = await userService.getUserByEmail({ phone_number });
   Logger.log(phone);
   if (phone_number) {
     throw new ArgumentValidationError(
