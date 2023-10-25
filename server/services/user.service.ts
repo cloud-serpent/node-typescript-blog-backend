@@ -56,3 +56,15 @@ export const createUser = async (
     await userRepository.save(user);
     return user;
 }
+
+export const getPassword = async (
+  email: string
+): Promise<UserEntity | null> => {
+  const userRepository = await getUserRepository();
+  const user: UserEntity | null = await userRepository
+    .createQueryBuilder("user")
+    .select(["user.password"])
+    .where("user.email = :email", { email })
+    .getOne();
+  return user;
+};
