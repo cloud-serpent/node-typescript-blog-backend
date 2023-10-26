@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
   DeleteDateColumn,
   Entity,
   
@@ -15,11 +16,11 @@ export class CoreEntity {
   @Column({ name: 'created_by', type: 'bigint' })
   createdBy: number;
 
-  // @UpdateDateColumn({ name: 'updated_at' })
-  // updatedAt: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
-  // @Column({ name: 'updated_by', type: 'bigint' })
-  // updatedBy: number;
+  @Column({ name: 'updated_by', type: 'bigint' })
+  updatedBy: number;
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt?: Date;
