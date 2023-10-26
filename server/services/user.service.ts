@@ -9,12 +9,12 @@ export const getUser = async (
     .createQueryBuilder("user")
     .select([
       "user.email",
-      "user.display_name",
-      "user.country_code",
-      "user.phone_number",
+      "user.displayName",
+      "user.countryCode",
+      "user.phoneNumber",
       "user.role",
       "user.activated",
-      "user.avartar",
+      "user.avatar",
     ])
     .where(data)
     .getOne();
@@ -47,7 +47,7 @@ export const getPassword = async (
   const user: UserEntity | null = await userRepository
     .createQueryBuilder("user")
     .select(["user.password"])
-    .where("user.email = :email", { email })
+    .where({ email })
     .getOne();
   return user;
 };

@@ -34,9 +34,9 @@ type Params = unknown;
 type ResBody = unknown;
 type ReqBody = {
   email?: string;
-  display_name?: string;
+  displayName?: string;
   phoneNumber?: string;
-  country_code?: string;
+  countryCode?: string;
   password: string;
 };
 type IFile = {
@@ -49,7 +49,7 @@ export const registerHandler = async (
   req: Request<Params, ResBody, ReqBody, IFile, ReqQuery>,
   res: Response
 ) => {
-  const { email, display_name, phoneNumber, country_code, password } = req.body;
+  const { email, displayName, phoneNumber, countryCode, password } = req.body;
   const user = await userService.getUser({ email });
   Logger.log(user);
   if (user) {
@@ -66,7 +66,7 @@ export const registerHandler = async (
 
   const phone = await userService.getUser({ phoneNumber });
   Logger.log(phone);
-  if (phoneNumber) {
+  if (phone) {
     throw new ArgumentValidationError(
       `${phoneNumber} is already registered. Please sign in or change another phone number`,
       [
@@ -79,8 +79,8 @@ export const registerHandler = async (
   }
   const cryptPassword = await encryptPassword(password);
   const result = await userService.createUser(
-    display_name,
-    country_code,
+    displayName,
+    countryCode,
     phoneNumber,
     email,
     cryptPassword
