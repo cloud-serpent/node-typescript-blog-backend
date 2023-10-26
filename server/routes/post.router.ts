@@ -25,4 +25,11 @@ postRouter.get(
   postController.postGetUser
 );
 
+postRouter.delete(
+  "/:id",
+  checkToken,
+  postController.postDeleteValidator(),
+  postController.postDelete
+);
+
 export default postRouter;

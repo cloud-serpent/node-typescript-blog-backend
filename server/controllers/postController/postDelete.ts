@@ -7,31 +7,28 @@ import { ArgumentValidationError } from "errors";
 import { errorHandlerWrapper } from "utils/errorHandler.wrapper";
 import { AuthRequest } from "types";
 
-export const postGetUserValidator = () => {
+export const postDeleteValidator = () => {
   return [
-    param('page').notEmpty().withMessage({page:'Page number is required'}),
-    param('listnum').notEmpty().withMessage({page:'List counts is required'})
+    param('id').notEmpty().withMessage({id:'Id of post should be deleted is required'})
   ];
 };
 
 type Params = {
-    page: number;
-    listnum: number;
+    id:number
 };
 type ResBody = unknown;
 type ReqBody = unknown;
 
 type ReqQuery = unknown;
 
-export const postGetUserHandler = async (
+export const postDeleteHandler = async (
   req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const user_id = req.user.id;
-  const {page, listnum} = req.params;
+  const { id } = req.params;
 
-  const result = await postService.getPostUser(user_id);
-  res.status(httpStatus.OK).json(result.slice(listnum*(page-1), listnum*page));
+  const result = await postService.deletePost(id);
+  res.status(httpStatus.OK).json(result);
 };
 
-export const postGetUser = errorHandlerWrapper(postGetUserHandler);
+export const postDelete = errorHandlerWrapper(postDeleteHandler);

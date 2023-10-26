@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import httpStatus from "http-status";
 import { NextFunction, Request, Response } from "express";
 
@@ -27,6 +28,13 @@ export const errorHandlerMiddleware = (
 		}
 		return;
 	}
+
+	if (error instanceof AxiosError) {
+		console.log('ssss')
+		return res.status(error.response.status).json({
+		  message: error.response.statusText,
+		});
+	  }
 
 	res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
 		message: (error as Error).message,

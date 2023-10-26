@@ -21,8 +21,8 @@ export class PostEntity extends CoreEntity {
   user_id: number;
 
   @Column({ name: "status", default: 0 })
-  status: PostActivationStatus;
+  status?: number;
 
   @Column({ name: "attachments", nullable: true })
-  attachments: string;
+  attachments?: string;
 }

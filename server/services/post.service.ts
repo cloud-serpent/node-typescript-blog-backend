@@ -15,14 +15,14 @@ const postUser: PostEntity[] | null = await postRepository.find({
         user_id:user_id
     }
 })
-  return postUser;
+  return postUser.reverse();
 };
 
 export const createPost = async (
   title: string,
   body: string,
   user_id: number,
-  attachments?: string
+  attachments?: string,
 ): Promise<PostEntity | null> => {
   const postRepository = await getPostRepository();
   const post = new PostEntity();
@@ -54,3 +54,12 @@ export const updatePost = async (
   await postRepository.save(post_update);
   return post_update;
 };
+
+export const deletePost = async( id:number ) : Promise<Boolean> => {
+    const postRepository = await getPostRepository();
+
+    const post = await postRepository.delete({
+        id:id
+    });
+    return post.affected ? true : false
+}

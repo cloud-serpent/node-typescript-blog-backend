@@ -8,6 +8,7 @@ export const getUser = async (
   const user: UserEntity | null = await userRepository
     .createQueryBuilder("user")
     .select([
+      "user.id",
       "user.email",
       "user.displayName",
       "user.countryCode",

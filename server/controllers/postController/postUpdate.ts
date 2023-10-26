@@ -16,7 +16,6 @@ type ReqBody = {
   id: number;
   title?: string;
   body?: string;
-  user_id: number;
   attachments?: string;
 };
 
@@ -26,7 +25,7 @@ export const postUpdateHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const { id, title, body, user_id, attachments } = req.body;
+  const { id, title, body, attachments } = req.body;
 
   const result = await postService.updatePost({ id, title, body, attachments });
   res.status(httpStatus.OK).json(result);

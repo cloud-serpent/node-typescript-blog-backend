@@ -5,6 +5,7 @@ import { MESSAGES } from "consts";
 import { postService} from "services";
 import { ArgumentValidationError } from "errors";
 import { errorHandlerWrapper } from "utils/errorHandler.wrapper";
+import { AuthRequest } from "types";
 
 export const postCreateValidator = () => {
   return [
@@ -29,7 +30,7 @@ type ReqBody = {
 type ReqQuery = unknown;
 
 export const postCreateHandler = async (
-  req: Request<Params, ResBody, ReqBody, ReqQuery>,
+  req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
   const { title, body, user_id, attachments } = req.body;
