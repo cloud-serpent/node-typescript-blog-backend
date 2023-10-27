@@ -9,20 +9,20 @@ import { AuthRequest } from "types";
 
 export const commentCreateValidator = () => {
     return [
-        body("post_id")
+        body("postId")
             .notEmpty()
-            .withMessage({ post_id: "Post_ID is required" }),
-        body("user_id")
+            .withMessage({ postId: "Post_ID is required" }),
+        body("userId")
             .notEmpty()
-            .withMessage({ user_id: "User_ID is required" })
+            .withMessage({ userId: "User_ID is required" })
     ];
 };
 
 type Params = unknown
 type ResBody = unknown;
 type ReqBody = {
-    post_id: number;
-    user_id: number;
+    postId: number;
+    userId: number;
     body: string;
 };
 type ReqQuery = unknown;
@@ -31,11 +31,11 @@ export const createCommentHandler = async (
     req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
     res: Response
 ) => {
-    const { post_id, user_id, body } = req.body;
+    const { postId, userId, body } = req.body;
 
     const result = await postService.createCom(
-        post_id,
-        user_id,
+        postId,
+        userId,
         body
     );
     res.status(httpStatus.OK).json(result);

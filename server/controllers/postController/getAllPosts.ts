@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 import httpStatus from 'http-status';
 import { MESSAGES } from 'consts';
 import { postService } from 'services';
@@ -9,31 +9,31 @@ import { AuthRequest } from 'types';
 
 export const getAllPostValidator = () => {
     return [
-        param('page')
+        query('page')
             .notEmpty()
             .withMessage({ page: 'Page number is required' }),
-        param('listnum')
+        query('listNum')
             .notEmpty()
             .withMessage({ page: 'List counts is required' })
     ];
 };
 
-type Params = {
-    page: number;
-    listnum: number;
-};
+type Params = unknown;
 type ResBody = unknown;
 type ReqBody = unknown;
-type ReqQuery = unknown;
+type ReqQuery = {
+    page: number;
+    listNum: number;
+};
 
 export const getAllPostHandler = async(
     req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
     res: Response
 ) => {
-    const { page, listnum } = req.params;
+    const { page, listNum } = req.query;
 
     const result = await postService.getAllPost();
-    res.status(httpStatus.OK).json(result.slice(listnum*(page-1), listnum*page));
+    res.status(httpStatus.OK).json(result.slice(listNum*(page-1), listNum*page));
 }
 
 export const postAll = errorHandlerWrapper(getAllPostHandler);

@@ -31,33 +31,33 @@ export const getPost = async (
   const postRepository = await getPostRepository();
   const certainPost: PostEntity[] | null = await postRepository.find({
     where: {
-      id : id
+       id
     }
   })
   return certainPost;
 }
 
 export const createCom = async(
-  post_id: number,
-  user_id: number,
+  postId: number,
+  userId: number,
   body: string
 ): Promise<CommentEntity | null> => {
   const commentRepository = await getCommentRepository();
   const comment = new CommentEntity();
-  comment.post_id = post_id;
-  comment.user_id = user_id;
+  comment.postId = postId;
+  comment.userId = userId;
   comment.body = body;
   await commentRepository.save(comment);
   return comment;
 }
 
 export const readCom = async (
-  post_id: number
+  postId: number
 ): Promise<CommentEntity[] | null> => {
   const commentRepository = await getCommentRepository();
   const comment: CommentEntity[] | null = await commentRepository.find({
     where: {
-      post_id: post_id
+      postId
     }
   });
   return comment.reverse();
