@@ -47,14 +47,14 @@ postRouter.get(
 )
 
 postRouter.post(
-  "/:post_id/comment",
+  "/comment/:post_id",
   checkToken,
   postController.commentCreateValidator(),
   postController.commentCreate
 )
 
 postRouter.get(
-  "/:post_id/commet",
+  "/comment/:post_id",
   checkToken,
   postController.commentReadValidator(),
   postController.commentRead
