@@ -1,5 +1,5 @@
-import { PostEntity } from "entities";
-import { getPostRepository } from "utils";
+import { CommentEntity, PostEntity } from "entities";
+import { getPostRepository, getCommentRepository } from "utils";
 
 export const getPostUser = async (
   user_id: number
@@ -35,6 +35,32 @@ export const getPost = async (
     }
   })
   return certainPost;
+}
+
+export const createCom = async(
+  post_id: number,
+  user_id: number,
+  body: string
+): Promise<CommentEntity | null> => {
+  const commentRepository = await getCommentRepository();
+  const comment = new CommentEntity();
+  comment.post_id = post_id;
+  comment.user_id = user_id;
+  comment.body = body;
+  await commentRepository.save(comment);
+  return comment;
+}
+
+export const readCom = async (
+  post_id: number
+): Promise<CommentEntity[] | null> => {
+  const commentRepository = await getCommentRepository();
+  const comment: CommentEntity[] | null = await commentRepository.find({
+    where: {
+      post_id: post_id
+    }
+  });
+  return comment.reverse();
 }
 
 export const createPost = async (

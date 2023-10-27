@@ -46,4 +46,18 @@ postRouter.get(
   postController.postCertain
 )
 
+postRouter.post(
+  "/:post_id/comment",
+  checkToken,
+  postController.commentCreateValidator(),
+  postController.commentCreate
+)
+
+postRouter.get(
+  "/:post_id/commet",
+  checkToken,
+  postController.commentReadValidator(),
+  postController.commentRead
+)
+
 export default postRouter;

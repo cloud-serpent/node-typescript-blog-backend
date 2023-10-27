@@ -15,11 +15,11 @@ export class CommentEntity extends CoreEntity {
     id: number;
 
     @Column({ name: "post_id", nullable: false })
-    postId: number;
+    post_id: number;
 
     @Column({ name: "user_id", nullable: false })
-    userId: number;
+    user_id: number;
 
-    @Column({ name: "comment", nullable: false })
-    comment: string;
+    @Column({ name: "body", nullable: false })
+    body: string;
 }
