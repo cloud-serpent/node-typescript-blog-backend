@@ -9,7 +9,7 @@ export const getPostUser = async (
 //     .createQueryBuilder("post")
 //     .select()
 //     .where({user_id:user_id})
-//     .getMany();
+    // .getMany();
 const postUser: PostEntity[] | null = await postRepository.find({
     where: {
         user_id:user_id
@@ -17,6 +17,16 @@ const postUser: PostEntity[] | null = await postRepository.find({
 })
   return postUser.reverse();
 };
+
+export const getAllPost = async () : Promise<PostEntity[]|null> => {
+  const postRepository = await getPostRepository();
+  const postUser: PostEntity[] | null = await postRepository
+    .createQueryBuilder("post")
+    .select()
+    .getMany();
+
+  return postUser.reverse();
+}
 
 export const createPost = async (
   title: string,

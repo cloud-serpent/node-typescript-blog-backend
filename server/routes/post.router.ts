@@ -32,4 +32,11 @@ postRouter.delete(
   postController.postDelete
 );
 
+postRouter.get(
+  "/all/:page/:listnum",
+  checkToken,
+  postController.getAllPostValidator(),
+  postController.postAll
+)
+
 export default postRouter;
