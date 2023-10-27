@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import httpStatus from "http-status";
 import { MESSAGES } from "consts";
 import { postService} from "services";
@@ -9,7 +9,7 @@ import { AuthRequest } from "types";
 
 export const commentReadValidator = () => {
     return [
-        body("post_id")
+        param("post_id")
             .notEmpty()
             .withMessage({ post_id: "Post_ID is required" })
     ];
