@@ -32,5 +32,5 @@ export class UserEntity extends CoreEntity {
   avatar?: string;
 
   @Column({ name: "activated", default: 0 })
-  activated: UserActivationStatus;
+  activated: number;
 }

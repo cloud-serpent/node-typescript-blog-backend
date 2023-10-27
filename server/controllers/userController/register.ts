@@ -66,7 +66,7 @@ export const registerHandler = async (
 
   const phone = await userService.getUser({ phoneNumber });
   Logger.log(phone);
-  if (phoneNumber) {
+  if (phone) {
     throw new ArgumentValidationError(
       `${phoneNumber} is already registered. Please sign in or change another phone number`,
       [
