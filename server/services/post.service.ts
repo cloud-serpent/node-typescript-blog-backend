@@ -20,11 +20,8 @@ const postUser: PostEntity[] | null = await postRepository.find({
 
 export const getAllPost = async () : Promise<PostEntity[]|null> => {
   const postRepository = await getPostRepository();
-  const postUser: PostEntity[] | null = await postRepository
-    .createQueryBuilder("post")
-    .select()
-    .getMany();
-
+  const postUser: PostEntity[] | null = await postRepository.find();
+  console.log(postUser)
   return postUser.reverse();
 }
 
