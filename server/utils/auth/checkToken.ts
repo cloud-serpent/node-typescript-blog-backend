@@ -1,9 +1,11 @@
-import { MESSAGES, REASON_CODE } from "consts";
-import { NotFoundError } from "errors";
 import { Response } from 'express';
 import httpStatus from "http-status";
 import jwt from 'jsonwebtoken';
+
 import { JWT_TOKEN } from 'config';
+import { MESSAGES, REASON_CODE } from "consts";
+
+import { NotFoundError } from "errors";
 import { userService } from 'services';
 import { Logger } from "utils/logger";
 
