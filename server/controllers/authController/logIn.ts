@@ -10,12 +10,17 @@ import { REASON_CODE } from "consts";
 
 export const logInValidator = () => {
   return [
-    body("email").optional().isEmail().withMessage("Email is not correct."),
+    body("email")
+      .optional()
+      .isEmail()
+      .withMessage({ email: "Email is incorrect." }),
     body("phoneNumber")
       .optional()
       .isMobilePhone("any")
-      .withMessage("Phone number is not correct"),
-    body("password").notEmpty().withMessage("Password is required."),
+      .withMessage({ phoneNumber: "Phone number is not correct" }),
+    body("password")
+      .notEmpty()
+      .withMessage({ password: "Password is required." }),
   ];
 };
 
