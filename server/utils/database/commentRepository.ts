@@ -1,4 +1,4 @@
-import { DBConnect } from "utils/dbConnector";
+import { DBConnect } from "../dbConnector";
 
 import { CommentEntity } from "entities";
 

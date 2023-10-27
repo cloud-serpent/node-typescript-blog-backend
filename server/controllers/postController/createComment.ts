@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import httpStatus from "http-status";
 import { MESSAGES } from "consts";
 import { postService} from "services";
@@ -11,15 +11,17 @@ export const commentCreateValidator = () => {
     return [
         body("post_id")
             .notEmpty()
-            .withMessage({ post_id: "Post_ID is required" })
+            .withMessage({ post_id: "Post_ID is required" }),
+        body("user_id")
+            .notEmpty()
+            .withMessage({ user_id: "User_ID is required" })
     ];
 };
 
-type Params = {
-    post_id: number;
-};
+type Params = unknown
 type ResBody = unknown;
 type ReqBody = {
+    post_id: number;
     user_id: number;
     body: string;
 };
@@ -29,8 +31,7 @@ export const createCommentHandler = async (
     req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
     res: Response
 ) => {
-    const { post_id } = req.params;
-    const { user_id, body } = req.body;
+    const { post_id, user_id, body } = req.body;
 
     const result = await postService.createCom(
         post_id,

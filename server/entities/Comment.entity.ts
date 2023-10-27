@@ -14,12 +14,12 @@ export class CommentEntity extends CoreEntity {
     @PrimaryGeneratedColumn("increment", { type: "bigint" })
     id: number;
 
-    @Column({ name: "post_id", nullable: false })
+    @Column({ name: "post_id", nullable: true })
     post_id: number;
 
-    @Column({ name: "user_id", nullable: false })
+    @Column({ name: "user_id", nullable: true })
     user_id: number;
 
-    @Column({ name: "body", nullable: false })
+    @Column({ name: "body", nullable: true })
     body: string;
 }

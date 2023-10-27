@@ -9,24 +9,24 @@ import { AuthRequest } from "types";
 
 export const commentReadValidator = () => {
     return [
-        param("post_id")
+        body("post_id")
             .notEmpty()
             .withMessage({ post_id: "Post_ID is required" })
     ];
 };
 
-type Params = {
+type Params = unknown;
+type ResBody = unknown;
+type ReqBody = {
     post_id: number;
 };
-type ResBody = unknown;
-type ReqBody = unknown;
 type ReqQuery = unknown;
 
 export const commentReadHandler = async (
     req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
     res: Response
 ) => {
-    const { post_id } = req.params;
+    const { post_id } = req.body;
 
     const result = await postService.readCom(
         post_id
