@@ -25,7 +25,7 @@ export const getAllPost = async () : Promise<PostEntity[]|null> => {
   return postUser.reverse();
 }
 
-export const getCertainPost = async (
+export const getPost = async (
   id: number
 ): Promise<PostEntity[] | null> => {
   const postRepository = await getPostRepository();

@@ -28,7 +28,7 @@ export const getCentainPostHandler = async(
 ) => {
     const { id } = req.params;
 
-    const result = await postService.getCertainPost();
+    const result = await postService.getPost(id);
     res.status(httpStatus.OK).json(result);
 }
 
