@@ -21,8 +21,20 @@ const postUser: PostEntity[] | null = await postRepository.find({
 export const getAllPost = async () : Promise<PostEntity[]|null> => {
   const postRepository = await getPostRepository();
   const postUser: PostEntity[] | null = await postRepository.find();
-  console.log(postUser)
+  //console.log(postUser)
   return postUser.reverse();
+}
+
+export const getCertainPost = async (
+  id: number
+): Promise<PostEntity[] | null> => {
+  const postRepository = await getPostRepository();
+  const certainPost: PostEntity[] | null = await postRepository.find({
+    where: {
+      id : id
+    }
+  })
+  return certainPost;
 }
 
 export const createPost = async (

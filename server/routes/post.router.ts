@@ -39,4 +39,11 @@ postRouter.get(
   postController.postAll
 )
 
+postRouter.get(
+  "/:id",
+  checkToken,
+  postController.getCertainValidator(),
+  postController.postCertain
+)
+
 export default postRouter;
