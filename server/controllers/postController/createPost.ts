@@ -23,7 +23,7 @@ type ResBody = unknown;
 type ReqBody = {
     title: string,
     body: string,
-    user_id: number,
+    userId: number,
     attachments?:string
 };
 
@@ -34,11 +34,11 @@ export const postCreateHandler = async (
   res: Response
 ) => {
   const { title, body, attachments } = req.body;
-  const user_id = req.user.id;
+  const userId = req.user.id;
   const result = await postService.createPost(
     title,
     body,
-    user_id,
+    userId,
     attachments
   );
   res.status(httpStatus.OK).json(result);
