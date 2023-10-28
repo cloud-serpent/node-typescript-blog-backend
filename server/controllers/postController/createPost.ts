@@ -33,8 +33,8 @@ export const postCreateHandler = async (
   req: AuthRequest<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const { title, body, user_id, attachments } = req.body;
-
+  const { title, body, attachments } = req.body;
+  const user_id = req.user.id;
   const result = await postService.createPost(
     title,
     body,

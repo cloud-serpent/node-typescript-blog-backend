@@ -31,7 +31,7 @@ export const postGetUserHandler = async (
   const {page, listnum} = req.params;
 
   const result = await postService.getPostUser(user_id);
-  res.status(httpStatus.OK).json(result.slice(listnum*(page-1), listnum*page));
+  res.status(httpStatus.OK).json({posts: result.slice(listnum*(page-1), listnum*page), total: Math.ceil(result.length / listnum)});
 };
 
 export const postGetUser = errorHandlerWrapper(postGetUserHandler);
