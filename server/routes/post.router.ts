@@ -5,7 +5,7 @@ import { checkToken } from "utils/auth";
 const postRouter = express.Router();
 
 postRouter.post(
-  "/post/",
+  "/post",
   checkToken,
   postController.postCreateValidator(),
   postController.postCreate
@@ -33,7 +33,7 @@ postRouter.delete(
 );
 
 postRouter.get(
-  "/post/",
+  "/post",
   checkToken,
   postController.getAllPostValidator(),
   postController.postAll

@@ -10,7 +10,7 @@ import { AuthRequest } from "types";
 export const postGetUserValidator = () => {
   return [
     query('page').notEmpty().withMessage({page:'Page number is required'}),
-    query('listnum').notEmpty().withMessage({page:'List counts is required'})
+    query('listNum').notEmpty().withMessage({page:'List counts is required'})
   ];
 };
 
@@ -19,8 +19,8 @@ type ResBody = unknown;
 type ReqBody = unknown;
 
 type ReqQuery = {
-    page: number;
-    listnum: number;
+  page: number;
+  listNum: number;
 };
 
 export const postGetUserHandler = async (
@@ -28,10 +28,10 @@ export const postGetUserHandler = async (
   res: Response
 ) => {
   const user_id = req.user.id;
-  const {page, listnum} = req.query;
+  const {page, listNum} = req.query;
 
   const result = await postService.getPostUser(user_id);
-  res.status(httpStatus.OK).json(result.slice(listnum*(page-1), listnum*page));
+  res.status(httpStatus.OK).json({posts: result.slice(listNum*(page-1), listNum*page), total: Math.ceil(result.length / listNum)});
 };
 
 export const postGetUser = errorHandlerWrapper(postGetUserHandler);
