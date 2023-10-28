@@ -5,56 +5,56 @@ import { checkToken } from "utils/auth";
 const postRouter = express.Router();
 
 postRouter.post(
-  "/",
+  "/post/",
   checkToken,
   postController.postCreateValidator(),
   postController.postCreate
 );
 
 postRouter.put(
-  "/",
+  "/post",
   checkToken,
   postController.postUpdateValidator(),
   postController.postUpdate
 );
 
 postRouter.get(
-  "/:page/:listnum",
+  "/post/user",
   checkToken,
   postController.postGetUserValidator(),
   postController.postGetUser
 );
 
 postRouter.delete(
-  "/:id",
+  "/post/:id",
   checkToken,
   postController.postDeleteValidator(),
   postController.postDelete
 );
 
 postRouter.get(
-  "/all/:page/:listnum",
+  "/post/",
   checkToken,
   postController.getAllPostValidator(),
   postController.postAll
 )
 
 postRouter.get(
-  "/:id",
+  "/post/:postId",
   checkToken,
   postController.getCertainValidator(),
   postController.postCertain
 )
 
 postRouter.post(
-  "/comment",
+  "/post/comment",
   checkToken,
   postController.commentCreateValidator(),
   postController.commentCreate
 )
 
 postRouter.get(
-  "/comment",
+  "/post/comment/:postId",
   checkToken,
   postController.commentReadValidator(),
   postController.commentRead
