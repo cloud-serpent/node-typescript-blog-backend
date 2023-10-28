@@ -5,28 +5,28 @@ import { checkToken } from "utils/auth";
 const postRouter = express.Router();
 
 postRouter.post(
-  "/",
+  "/post",
   checkToken,
   postController.postCreateValidator(),
   postController.postCreate
 );
 
 postRouter.put(
-  "/",
+  "/post",
   checkToken,
   postController.postUpdateValidator(),
   postController.postUpdate
 );
 
 postRouter.get(
-  "/:page/:listnum",
+  "/post/user",
   checkToken,
   postController.postGetUserValidator(),
   postController.postGetUser
 );
 
 postRouter.delete(
-  "/:id",
+  "/post/:id",
   checkToken,
   postController.postDeleteValidator(),
   postController.postDelete
