@@ -32,4 +32,32 @@ postRouter.delete(
   postController.postDelete
 );
 
+postRouter.get(
+  "/post",
+  checkToken,
+  postController.getAllPostValidator(),
+  postController.postAll
+)
+
+postRouter.get(
+  "/post/:postId",
+  checkToken,
+  postController.getCertainValidator(),
+  postController.postCertain
+)
+
+postRouter.post(
+  "/post/comment",
+  checkToken,
+  postController.commentCreateValidator(),
+  postController.commentCreate
+)
+
+postRouter.get(
+  "/post/comment/:postId",
+  checkToken,
+  postController.commentReadValidator(),
+  postController.commentRead
+)
+
 export default postRouter;

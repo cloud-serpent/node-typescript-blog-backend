@@ -30,7 +30,6 @@ export const errorHandlerMiddleware = (
 	}
 
 	if (error instanceof AxiosError) {
-		console.log('ssss')
 		return res.status(error.response.status).json({
 		  message: error.response.statusText,
 		});

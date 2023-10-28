@@ -1,5 +1,5 @@
-import { PostEntity } from "entities";
-import { getPostRepository } from "utils";
+import { CommentEntity, PostEntity } from "entities";
+import { getPostRepository, getCommentRepository } from "utils";
 
 export const getPostUser = async (
   user_id: number
@@ -9,7 +9,7 @@ export const getPostUser = async (
 //     .createQueryBuilder("post")
 //     .select()
 //     .where({user_id:user_id})
-//     .getMany();
+    // .getMany();
 const postUser: PostEntity[] | null = await postRepository.find({
     where: {
         user_id:user_id
@@ -17,6 +17,51 @@ const postUser: PostEntity[] | null = await postRepository.find({
 })
   return postUser.reverse();
 };
+
+export const getAllPost = async () : Promise<PostEntity[]|null> => {
+  const postRepository = await getPostRepository();
+  const postUser: PostEntity[] | null = await postRepository.find();
+  //console.log(postUser)
+  return postUser.reverse();
+}
+
+export const getPost = async (
+  id: number
+): Promise<PostEntity[] | null> => {
+  const postRepository = await getPostRepository();
+  const certainPost: PostEntity[] | null = await postRepository.find({
+    where: {
+       id
+    }
+  })
+  return certainPost;
+}
+
+export const createCom = async(
+  postId: number,
+  userId: number,
+  body: string
+): Promise<CommentEntity | null> => {
+  const commentRepository = await getCommentRepository();
+  const comment = new CommentEntity();
+  comment.postId = postId;
+  comment.userId = userId;
+  comment.body = body;
+  await commentRepository.save(comment);
+  return comment;
+}
+
+export const readCom = async (
+  postId: number
+): Promise<CommentEntity[] | null> => {
+  const commentRepository = await getCommentRepository();
+  const comment: CommentEntity[] | null = await commentRepository.find({
+    where: {
+      postId
+    }
+  });
+  return comment.reverse();
+}
 
 export const createPost = async (
   title: string,
