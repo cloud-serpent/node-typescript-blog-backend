@@ -2,7 +2,7 @@ import { json as bodyParserJSON } from "body-parser";
 import cors from "cors";
 import "dotenv/config";
 import express, { Express } from "express";
-import fileUpload from 'express-fileupload';
+import fileUpload from "express-fileupload";
 
 import { ROUTE_VERSION } from "config";
 
@@ -12,6 +12,8 @@ import { errorHandlerMiddleware, requestLoggerMiddleware } from "middlewares";
 
 import appRoutes from "routes";
 
+const path = require("path");
+
 const port = process.env.PORT || 8000;
 
 const backendSetup = (app: Express) => {
@@ -20,22 +22,24 @@ const backendSetup = (app: Express) => {
   app.use(bodyParserJSON());
 
   app.use(requestLoggerMiddleware);
+  app.use(express.static(path.join(__dirname, "../../public/upload/img")));
 
   // Health check
   app.use("/health", function (_req, res) {
     res.send("OK");
   });
 
-  app.use(fileUpload({
-    createParentPath: true,
-    abortOnLimit: true,
-    // limits: {fileSize: 1000*1024*1024},
-    useTempFiles: true, 
-    tempFileDir: '/tmp/',
-    safeFileNames: true,
-    preserveExtension: true
-  }));
-
+  app.use(
+    fileUpload({
+      createParentPath: true,
+      abortOnLimit: true,
+      // limits: {fileSize: 1000*1024*1024},
+      useTempFiles: true,
+      tempFileDir: "/tmp/",
+      safeFileNames: true,
+      preserveExtension: true,
+    })
+  );
 
   app.use(`/api/${ROUTE_VERSION}`, appRoutes);
 
